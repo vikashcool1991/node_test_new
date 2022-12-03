@@ -168,6 +168,11 @@ export class EventsService {
      */
   @Get('futureevents')
   async getFutureEventWithWorkshops() {
-    throw new Error('TODO task 2');
+    return this.eventRepository
+      .createQueryBuilder('event')
+      .leftJoinAndSelect('event.workshops', 'workshop')
+      .andWhere('workshop.start > :current', { current: new Date() })
+      .orderBy('workshop.id', 'ASC')
+      .getMany();
   }
 }
