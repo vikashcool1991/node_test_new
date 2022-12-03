@@ -86,6 +86,13 @@ export class MenuItemsService {
     ]
   */
   async getMenuItems() {
-    throw new Error('TODO in task 3');
+    return this.menuItemRepository.find({
+      relations: [
+        'children',
+        'children.children',
+        'children.children.children',
+      ],
+      take: 1,
+    });
   }
 }
